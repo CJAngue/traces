@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="traces-version" content="1">
+<title>Traces écrites</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%232346B0%22%2F%3E%3Crect%20x%3D%2212%22%20y%3D%2210%22%20width%3D%2240%22%20height%3D%2244%22%20rx%3D%223%22%20fill%3D%22%23fff%22%2F%3E%3Cpath%20d%3D%22M20%2010v44%22%20stroke%3D%22%23E0566B%22%20stroke-width%3D%222%22%2F%3E%3Cpath%20d%3D%22M24%2024h22M24%2032h22M24%2040h16%22%20stroke%3D%22%237B6CC4%22%20stroke-width%3D%222%22%2F%3E%3C%2Fsvg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playwrite+FR+Moderne&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Lexend:wght@400;700&display=swap">
+<style>
+.sheet-body{font-family:var(--ff,Arial,sans-serif);font-size:var(--fs,14pt);line-height:var(--lh,1.5);color:#111;text-align:left;letter-spacing:.01em;word-spacing:.06em;overflow-wrap:break-word;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.sheet-body>:first-child{margin-top:0}
+.sheet-body>:last-child{margin-bottom:0}
+.sheet-body h1{font-size:1.3em;line-height:1.25;font-weight:700;margin:0 0 .55em}
+.sheet-body h2{font-size:1.12em;line-height:1.3;font-weight:700;margin:.85em 0 .3em}
+.sheet-body h3{font-size:1em;font-weight:700;margin:.75em 0 .25em}
+.sheet-body p{margin:0 0 .45em}
+.sheet-body ul,.sheet-body ol{margin:0 0 .55em;padding-left:1.4em}
+.sheet-body li{margin:.12em 0}
+.sheet-body li>p{margin:0}
+.sheet-body strong{font-weight:700}
+.sheet-body table{border-collapse:collapse;margin:.3em 0 .7em;max-width:100%}
+.sheet-body th,.sheet-body td{border:1px solid #555;padding:.2em .55em;text-align:left;vertical-align:top}
+.sheet-body th{font-weight:700}
+.sheet-body hr{border:0;border-top:1px solid #999;margin:.6em 0}
+.sheet-body mark{background:#FFF06A;color:inherit;padding:0 .1em;border-radius:2px}
+.sheet-body .c-rouge{color:#C62828}.sheet-body .c-bleu{color:#1E4FD8}.sheet-body .c-vert{color:#2E7D32}.sheet-body .c-orange{color:#C25E00}.sheet-body .c-violet{color:#7B3FB5}
+.copy{break-inside:avoid;page-break-inside:avoid}
+.copy+.copy{position:relative;margin-top:7mm;padding-top:7mm;border-top:1px dashed #8a8a8a}
+.copy+.copy::before{content:"\2702";position:absolute;top:0;left:0;transform:translateY(-55%);padding-right:2mm;background:#fff;color:#777;font:12pt/1 "Segoe UI Symbol","DejaVu Sans",sans-serif}
+
+
+:root{
+  --bg:#EDF0F5;--surface:#FFFFFF;--ink:#1C2133;--ink-soft:#596075;--line:#D3D9E4;
+  --accent:#2346B0;--accent-hover:#1A378F;--accent-ink:#FFFFFF;--accent-soft:#E3E9FA;
+  --margin-red:#E0566B;--seyes-light:rgba(110,92,196,.13);--seyes-strong:rgba(110,92,196,.30);
+  --header-bg:#FBFCFE;--danger:#B3263A;--focus:#E8A400;
+  --shadow:0 1px 2px rgba(28,33,51,.07),0 10px 28px rgba(28,33,51,.10);
+  --margin-x:320px;--pad:clamp(16px,3vw,36px);
+  color-scheme:light;box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#141824;--surface:#1D2231;--ink:#E7EAF3;--ink-soft:#A3AABD;--line:#2E3547;
+    --accent:#93AAFF;--accent-hover:#B0C1FF;--accent-ink:#0F1631;--accent-soft:#25304F;
+    --margin-red:#EE7487;--seyes-light:rgba(170,160,240,.08);--seyes-strong:rgba(170,160,240,.18);
+    --header-bg:#181D2B;--danger:#FF8A99;--focus:#FFC94D;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141824;--surface:#1D2231;--ink:#E7EAF3;--ink-soft:#A3AABD;--line:#2E3547;
+  --accent:#93AAFF;--accent-hover:#B0C1FF;--accent-ink:#0F1631;--accent-soft:#25304F;
+  --margin-red:#EE7487;--seyes-light:rgba(170,160,240,.08);--seyes-strong:rgba(170,160,240,.18);
+  --header-bg:#181D2B;--danger:#FF8A99;--focus:#FFC94D;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 28px rgba(0,0,0,.35);
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 "Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+h1,h2,p{margin:0}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+.top{position:relative;background-color:var(--header-bg);background-image:repeating-linear-gradient(180deg,var(--seyes-strong) 0 1px,transparent 1px 32px),repeating-linear-gradient(180deg,var(--seyes-light) 0 1px,transparent 1px 8px);background-position:0 31px,0 7px;border-bottom:1px solid var(--line)}
+.top::before{content:"";position:absolute;top:0;bottom:0;left:var(--margin-x);right:0;background-image:repeating-linear-gradient(90deg,var(--seyes-strong) 0 1px,transparent 1px 32px);pointer-events:none}
+.top::after{content:"";position:absolute;top:0;bottom:0;left:calc(var(--margin-x) - 1px);width:2px;background:var(--margin-red);pointer-events:none}
+.top-inner{position:relative;z-index:1;display:flex;align-items:center;min-height:96px;padding:0 var(--pad) 0 calc(var(--margin-x) + var(--pad))}
+.brand{font-family:"Playwrite FR Moderne","Segoe Script","Comic Sans MS",cursive;font-weight:400;font-size:34px;line-height:1.25;color:var(--accent);padding-top:4px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font-weight:700;font-size:16px;line-height:1.2;cursor:pointer}
+.btn:hover{border-color:var(--ink-soft)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+.btn.big{min-height:52px;padding:0 22px;font-size:17px}
+.btn.ghost{background:transparent;border-color:transparent}
+.ico{display:inline-flex}
+.ico svg{display:block}
+.layout{display:grid;grid-template-columns:var(--margin-x) minmax(0,1fr);align-items:start}
+.layout.is-empty .list-panel{grid-column:1/-1;padding-left:calc(var(--margin-x) + var(--pad) - 18px)}
+.list-panel{padding:18px 0 40px;min-width:0}
+.sheet-panel{padding:24px var(--pad) 56px;min-width:0}
+.back{display:none}
+@media (min-width:860px){
+  body{background-image:linear-gradient(90deg,transparent calc(var(--margin-x) - 1px),var(--margin-red) calc(var(--margin-x) - 1px),var(--margin-red) calc(var(--margin-x) + 1px),transparent calc(var(--margin-x) + 1px))}
+  .filters{flex-wrap:wrap}
+}
+.filters{display:flex;gap:6px;padding:0 16px 14px;overflow-x:auto;scrollbar-width:none}
+.chip{flex:none;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);font-weight:700;font-size:15px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+.traces{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.trace{position:relative;display:block;width:100%;text-align:left;padding:12px 18px 13px;border:0;border-bottom:1px solid var(--line);background:none;cursor:pointer}
+.trace:hover{background:var(--accent-soft)}
+.trace.active{background:var(--surface)}
+.trace.active::before{content:"";position:absolute;left:0;top:10px;bottom:10px;width:4px;border-radius:0 4px 4px 0;background:var(--accent)}
+.trace-meta{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--ink-soft)}
+.tag{font-weight:700;color:var(--ink);background:var(--accent-soft);padding:0 8px;border-radius:6px;line-height:1.6}
+.trace-title{display:block;margin-top:3px;font-size:17px;font-weight:700;line-height:1.3;overflow-wrap:anywhere}
+.empty{padding:6px 18px;max-width:46ch}
+.empty-title{font-size:20px;font-weight:700;margin-bottom:6px}
+.empty p+p{color:var(--ink-soft)}
+.empty .btn{margin-top:12px}
+.sheet-head h2{font-size:26px;line-height:1.2;font-weight:700;overflow-wrap:anywhere}
+.sub{margin-top:4px;color:var(--ink-soft)}
+.controls{display:flex;flex-wrap:wrap;gap:12px 22px;margin:18px 0 14px}
+.ctl{border:0;margin:0;padding:0;min-width:0}
+.ctl legend{padding:0;margin-bottom:5px;font-size:14px;color:var(--ink-soft)}
+.seg{display:inline-flex;align-items:stretch;border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
+.seg button{min-height:40px;min-width:44px;padding:0 11px;border:0;border-left:1px solid var(--line);background:none;font-weight:700;cursor:pointer}
+.seg button:first-child{border-left:0}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.seg button:disabled{opacity:.35;cursor:not-allowed}
+.stepper button{width:44px;padding:0;font-size:22px;line-height:1}
+.stepper output{display:flex;align-items:center;justify-content:center;min-width:40px;font-weight:700;border-left:1px solid var(--line)}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:22px}
+.sheet-stage{overflow-x:auto;padding:2px 2px 8px}
+.sheet{width:210mm;padding:12mm;background:#fff;color:#111;border-radius:2px;box-shadow:var(--shadow)}
+@media (max-width:859.98px){
+  :root{--margin-x:44px}
+  .top-inner{min-height:64px}
+  .brand{font-size:26px}
+  .layout{display:block}
+  .layout.is-empty .list-panel{padding-left:0}
+  .sheet-panel{display:none;padding:12px 16px 48px}
+  .layout.show-sheet .list-panel{display:none}
+  .layout.show-sheet .sheet-panel{display:block}
+  .back{display:inline-flex;margin:0 0 8px -8px}
+  .sheet-head h2{font-size:22px}
+}
+#print-root{display:none}
+@media print{
+  @page{size:A4 portrait;margin:12mm}
+  :root{padding:0!important}
+  html,body{background:#fff!important}
+  body>:not(#print-root){display:none!important}
+  #print-root{display:block!important}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="print-root"></div>
+<script>
+(() => {
+  'use strict';
+  const FONT_LINKS = [
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap">',
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playwrite+FR+Moderne&display=swap">',
+    '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Andika:wght@400;700&family=Lexend:wght@400;700&display=swap">'
+  ].join('\n');
+  const FONTS = {
+    arial: { label: 'Arial', css: 'Arial, "Liberation Sans", Helvetica, sans-serif' },
+    andika: { label: 'Andika', css: 'Andika, Verdana, Arial, sans-serif' },
+    lexend: { label: 'Lexend', css: 'Lexend, Verdana, Arial, sans-serif' }
+  };
+  const SIZES = [12, 14, 16, 18];
+  const SPACINGS = [1.3, 1.5, 1.8];
+  const MAX_COPIES = 6;
+  const PALETTE = { rouge: '#C62828', bleu: '#1E4FD8', vert: '#2E7D32', orange: '#E06F00', violet: '#7B3FB5' };
+  const has = (o, k) => Object.prototype.hasOwnProperty.call(o, k);
+  const store = {
+    get(k) { try { const v = window.localStorage.getItem(k); return v ? JSON.parse(v) : null; } catch (e) { return null; } },
+    set(k, v) { try { window.localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* stockage indisponible */ } },
+    del(k) { try { window.localStorage.removeItem(k); } catch (e) { /* stockage indisponible */ } }
+  };
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  function debounce(fn, ms) { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), ms); }; }
+  function h(tag, props, ...kids) {
+    const el = document.createElement(tag);
+    if (props) {
+      for (const [k, v] of Object.entries(props)) {
+        if (v == null || v === false) continue;
+        if (k === 'class') el.className = v;
+        else if (k === 'style') el.style.cssText = v;
+        else if (k.startsWith('on')) el.addEventListener(k.slice(2), v);
+        else if (v === true) el.setAttribute(k, '');
+        else el.setAttribute(k, v);
+      }
+    }
+    for (const kid of kids.flat(Infinity)) {
+      if (kid == null || kid === false) continue;
+      el.append(kid.nodeType ? kid : String(kid));
+    }
+    return el;
+  }
+  function icon(svg) {
+    const s = document.createElement('span');
+    s.className = 'ico';
+    s.setAttribute('aria-hidden', 'true');
+    s.innerHTML = svg;
+    return s;
+  }
+  function todayISO() {
+    const d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+  function fmtDate(iso, long) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(iso || '');
+    if (!m) return '';
+    const d = new Date(+m[1], +m[2] - 1, +m[3]);
+    const opts = long ? { weekday: 'long', day: 'numeric', month: 'long' } : { weekday: 'short', day: 'numeric', month: 'short' };
+    if (d.getFullYear() !== new Date().getFullYear()) opts.year = 'numeric';
+    try { return new Intl.DateTimeFormat('fr-FR', opts).format(d); } catch (e) { return iso; }
+  }
+
+  /* Nettoyage du HTML : seules les balises utiles à une trace écrite passent. */
+  const KEEP = new Set(['H1', 'H2', 'H3', 'P', 'BR', 'UL', 'OL', 'LI', 'STRONG', 'EM', 'U', 'MARK', 'TABLE', 'THEAD', 'TBODY', 'TR', 'TH', 'TD', 'SPAN', 'HR']);
+  const RENAME = { B: 'STRONG', I: 'EM', H4: 'H3', H5: 'H3', H6: 'H3', FONT: 'SPAN', INS: 'U' };
+  const WRAPPERS = new Set(['DIV', 'BLOCKQUOTE', 'SECTION', 'ARTICLE', 'HEADER', 'FOOTER', 'MAIN', 'CENTER', 'PRE', 'ADDRESS', 'FIGURE', 'FIGCAPTION', 'DL', 'DT', 'DD']);
+  const BLOCKS = new Set(['P', 'DIV', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'UL', 'OL', 'LI', 'TABLE', 'BLOCKQUOTE', 'SECTION', 'ARTICLE', 'HEADER', 'FOOTER', 'MAIN', 'HR', 'PRE', 'CENTER', 'DL', 'FIGURE', 'ADDRESS']);
+  const DROP = new Set(['SCRIPT', 'STYLE', 'IFRAME', 'OBJECT', 'EMBED', 'LINK', 'META', 'TEMPLATE', 'SVG', 'MATH', 'IMG', 'PICTURE', 'VIDEO', 'AUDIO', 'CANVAS', 'INPUT', 'BUTTON', 'TEXTAREA', 'SELECT', 'NOSCRIPT', 'TITLE', 'HEAD', 'FORM', 'S', 'STRIKE', 'DEL']);
+  const NO_COLOR = new Set(['UL', 'OL', 'TABLE', 'THEAD', 'TBODY', 'TR', 'BR', 'HR']);
+  function parseColor(str) {
+    if (!str) return null;
+    const s = String(str).trim().toLowerCase();
+    let m;
+    if ((m = /^#([0-9a-f]{3})$/.exec(s))) return m[1].split('').map(c => parseInt(c + c, 16));
+    if ((m = /^#([0-9a-f]{6})$/.exec(s))) return [0, 2, 4].map(i => parseInt(m[1].slice(i, i + 2), 16));
+    if ((m = /^rgba?\(\s*(\d+)[\s,]+(\d+)[\s,]+(\d+)/.exec(s))) return [+m[1], +m[2], +m[3]];
+    const named = { red: [255, 0, 0], blue: [0, 0, 255], green: [0, 128, 0], orange: [255, 165, 0], purple: [128, 0, 128], violet: [238, 130, 238] };
+    return has(named, s) ? named[s] : null;
+  }
+  function nearestColor(str) {
+    const rgb = parseColor(str);
+    if (!rgb || Math.max(...rgb) - Math.min(...rgb) < 40) return null;
+    let best = null, bestD = Infinity;
+    for (const [name, hex] of Object.entries(PALETTE)) {
+      const p = parseColor(hex);
+      const d = (p[0] - rgb[0]) ** 2 + (p[1] - rgb[1]) ** 2 + (p[2] - rgb[2]) ** 2;
+      if (d < bestD) { bestD = d; best = name; }
+    }
+    return best;
+  }
+  function colorOf(el) {
+    for (const c of Array.from(el.classList || [])) if (c.indexOf('c-') === 0 && has(PALETTE, c.slice(2))) return c.slice(2);
+    return nearestColor(el.getAttribute('color')) || nearestColor(el.style ? el.style.color : '');
+  }
+  function walk(src, dst) {
+    for (const node of Array.from(src.childNodes)) {
+      if (node.nodeType === 3) { dst.appendChild(document.createTextNode(node.nodeValue)); continue; }
+      if (node.nodeType !== 1) continue;
+      let tag = node.tagName.toUpperCase();
+      if (DROP.has(tag)) continue;
+      if (WRAPPERS.has(tag)) {
+        if (Array.from(node.children).some(k => BLOCKS.has(k.tagName.toUpperCase()))) { walk(node, dst); continue; }
+        tag = 'P';
+      }
+      tag = has(RENAME, tag) ? RENAME[tag] : tag;
+      if (!KEEP.has(tag)) { walk(node, dst); continue; }
+      const color = NO_COLOR.has(tag) ? null : colorOf(node);
+      if (tag === 'SPAN') {
+        if (!color) { walk(node, dst); continue; }
+        const sp = document.createElement('span');
+        sp.className = 'c-' + color;
+        walk(node, sp);
+        dst.appendChild(sp);
+        continue;
+      }
+      const el = document.createElement(tag.toLowerCase());
+      if (tag === 'TD' || tag === 'TH') {
+        for (const a of ['colspan', 'rowspan']) {
+          const v = parseInt(node.getAttribute(a), 10);
+          if (v > 1 && v < 30) el.setAttribute(a, String(v));
+        }
+      }
+      if (tag !== 'BR' && tag !== 'HR') {
+        let target = el;
+        if (color) { target = document.createElement('span'); target.className = 'c-' + color; el.appendChild(target); }
+        walk(node, target);
+      }
+      dst.appendChild(el);
+    }
+  }
+  function normalizeTop(root) {
+    const out = document.createElement('div');
+    let para = null, autoList = null;
+    for (const node of Array.from(root.childNodes)) {
+      const tag = node.nodeType === 1 ? node.tagName : '';
+      if (/^(H1|H2|H3|P|UL|OL|TABLE|HR)$/.test(tag)) { para = null; autoList = null; out.appendChild(node); continue; }
+      if (tag === 'LI') {
+        if (!autoList) { autoList = document.createElement('ul'); out.appendChild(autoList); }
+        autoList.appendChild(node); para = null; continue;
+      }
+      if (/^(THEAD|TBODY|TR|TH|TD)$/.test(tag)) { walk(node, para || out); continue; }
+      if (node.nodeType === 3 && !node.nodeValue.trim()) { if (para) para.appendChild(node); continue; }
+      if (tag === 'BR' && !para) continue;
+      if (!para) { para = document.createElement('p'); out.appendChild(para); autoList = null; }
+      para.appendChild(node);
+    }
+    const isEmpty = el => el.tagName === 'P' && !el.textContent.trim();
+    let prevEmpty = true;
+    for (const el of Array.from(out.children)) {
+      const e = isEmpty(el);
+      if (e && prevEmpty) el.remove();
+      prevEmpty = e;
+    }
+    while (out.lastElementChild && isEmpty(out.lastElementChild)) out.lastElementChild.remove();
+    return out;
+  }
+  function cleanNodes(html) {
+    const doc = new DOMParser().parseFromString('<!doctype html><html><body>' + String(html || '') + '</body></html>', 'text/html');
+    const tmp = document.createElement('div');
+    walk(doc.body, tmp);
+    return normalizeTop(tmp);
+  }
+  const cleanHTML = html => cleanNodes(html).innerHTML;
+  const plainText = html => cleanNodes(html).textContent;
+  const stripFences = t => String(t || '').trim().replace(/^```[a-zA-Z]*\s*/, '').replace(/\s*```\s*$/, '');
+  const countMarks = html => (String(html || '').match(/<mark[\s>]/gi) || []).length;
+  function firstHeading(html) {
+    const box = cleanNodes(html);
+    const hd = box.querySelector('h1, h2, h3');
+    let t = (hd ? hd.textContent : box.textContent).replace(/\s+/g, ' ').trim();
+    if (!hd && t.length > 60) t = t.slice(0, 57).trim() + '…';
+    return t;
+  }
+  /* Dans l'éditeur, les couleurs passent en <font color> pour que le navigateur sache les modifier. */
+  function toEditorHTML(html) {
+    const box = cleanNodes(html);
+    for (const sp of Array.from(box.querySelectorAll('span'))) {
+      const name = (sp.className || '').replace(/^c-/, '');
+      if (!has(PALETTE, name)) continue;
+      const f = document.createElement('font');
+      f.setAttribute('color', PALETTE[name]);
+      while (sp.firstChild) f.appendChild(sp.firstChild);
+      sp.replaceWith(f);
+    }
+    return box.innerHTML;
+  }
+
+  /* Données */
+  function normalizeData(raw) {
+    const list = raw && Array.isArray(raw.traces) ? raw.traces : [];
+    return {
+      v: 1,
+      traces: list.filter(t => t && typeof t.id === 'string' && typeof t.html === 'string').map(t => ({
+        id: t.id,
+        classe: String(t.classe || '').slice(0, 20),
+        titre: String(t.titre || '').slice(0, 120),
+        date: /^\d{4}-\d{2}-\d{2}$/.test(t.date || '') ? t.date : todayISO(),
+        html: t.html,
+        cree: String(t.cree || ''),
+        maj: String(t.maj || '')
+      }))
+    };
+  }
+  const sortTraces = list => list.slice().sort((a, b) => (b.date || '').localeCompare(a.date || '') || (b.cree || '').localeCompare(a.cree || ''));
+  function classesOf(list) {
+    const out = [];
+    for (const t of sortTraces(list)) if (t.classe && !out.includes(t.classe)) out.push(t.classe);
+    return out;
+  }
+  function readPrefs(key) {
+    const p = store.get(key) || {};
+    return {
+      size: SIZES.includes(p.size) ? p.size : 14,
+      lh: SPACINGS.includes(p.lh) ? p.lh : 1.5,
+      font: typeof p.font === 'string' && has(FONTS, p.font) ? p.font : 'arial',
+      copies: Number.isInteger(p.copies) && p.copies >= 1 && p.copies <= MAX_COPIES ? p.copies : 1
+    };
+  }
+  const sheetVars = p => '--fs:' + p.size + 'pt;--lh:' + p.lh + ';--ff:' + FONTS[p.font].css + ';';
+  function copiesNodes(html, n) {
+    const frag = document.createDocumentFragment();
+    for (let i = 0; i < n; i++) {
+      const body = h('div', { class: 'sheet-body' });
+      body.append(...Array.from(cleanNodes(html).childNodes));
+      frag.append(h('div', { class: 'copy' }, body));
+    }
+    return frag;
+  }
+  function fitSheets() {
+    for (const stage of Array.from(document.querySelectorAll('.sheet-stage'))) {
+      const sheet = stage.querySelector('.sheet');
+      if (!sheet) continue;
+      sheet.style.zoom = '';
+      const avail = stage.clientWidth - 6;
+      const w = sheet.offsetWidth;
+      if (w && avail > 0 && avail < w) sheet.style.zoom = String(Math.max(0.3, avail / w));
+    }
+  }
+
+  window.TL = {
+    FONT_LINKS, FONTS, SIZES, SPACINGS, MAX_COPIES, PALETTE, has, store, esc, debounce, h, icon, todayISO, fmtDate,
+    cleanNodes, cleanHTML, plainText, stripFences, countMarks, firstHeading, toEditorHTML,
+    normalizeData, sortTraces, classesOf, readPrefs, sheetVars, copiesNodes, fitSheets
+  };
+})();
+
+
+(() => {
+  'use strict';
+  const T = window.TL;
+  const { h, icon, fmtDate, FONTS, SIZES, SPACINGS, MAX_COPIES } = T;
+  const PREFS_KEY = 'traces.site.prefs.v1';
+  const ICON_PRINT = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9V4h10v5"/><path d="M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><path d="M7 14h10v6H7z"/></svg>';
+  const S = { data: { v: 1, traces: [] }, prefs: T.readPrefs(PREFS_KEY), sel: null, filter: 'all', view: 'list', state: 'loading', loadedAt: 0 };
+
+  const visible = () => { const all = T.sortTraces(S.data.traces); return S.filter === 'all' ? all : all.filter(t => t.classe === S.filter); };
+  function current(list) { list = list || visible(); return list.find(t => t.id === S.sel) || list[0] || null; }
+  const isNarrow = () => !!(window.matchMedia && window.matchMedia('(max-width: 859.98px)').matches);
+
+  function render() {
+    const cls = T.classesOf(S.data.traces);
+    if (S.filter !== 'all' && !cls.includes(S.filter)) S.filter = 'all';
+    const focusKey = document.activeElement && document.activeElement.getAttribute && document.activeElement.getAttribute('data-k');
+    const list = visible();
+    const cur = current(list);
+    const app = document.getElementById('app');
+    app.replaceChildren(
+      h('header', { class: 'top' }, h('div', { class: 'top-inner' }, h('h1', { class: 'brand' }, 'Traces écrites'))),
+      h('main', { class: 'layout' + (S.data.traces.length ? '' : ' is-empty') + (S.view === 'sheet' && cur ? ' show-sheet' : '') },
+        renderList(list, cur, cls),
+        renderSheet(cur)));
+    renderPrintRoot(cur);
+    if (focusKey) { const el = app.querySelector('[data-k="' + focusKey + '"]'); if (el) el.focus(); }
+    (window.requestAnimationFrame || setTimeout)(T.fitSheets);
+  }
+  function renderList(list, cur, cls) {
+    const kids = [];
+    if (S.state === 'loading' && !S.data.traces.length) {
+      kids.push(h('div', { class: 'empty' }, h('p', { class: 'empty-title' }, 'Chargement des traces…')));
+    } else if (S.state === 'error' && !S.data.traces.length) {
+      kids.push(h('div', { class: 'empty', role: 'alert' },
+        h('p', { class: 'empty-title' }, 'Les traces n’ont pas pu être chargées.'),
+        h('p', null, 'Vérifie la connexion, puis réessaie.'),
+        h('button', { class: 'btn', type: 'button', onclick: () => load() }, 'Réessayer')));
+    } else if (!S.data.traces.length) {
+      kids.push(h('div', { class: 'empty' },
+        h('p', { class: 'empty-title' }, 'Aucune trace pour l’instant.'),
+        h('p', null, 'Les traces publiées depuis le téléphone apparaissent ici, prêtes à imprimer.')));
+    } else {
+      if (cls.length > 1) {
+        kids.push(h('div', { class: 'filters', role: 'group', 'aria-label': 'Filtrer par classe' },
+          [['all', 'Toutes']].concat(cls.map(c => [c, c])).map(([v, label], i) =>
+            h('button', { type: 'button', class: 'chip', 'aria-pressed': String(S.filter === v), 'data-k': 'f' + i, onclick: () => { S.filter = v; S.sel = null; render(); } }, label))));
+      }
+      kids.push(h('ol', { class: 'traces', 'aria-label': 'Traces publiées' }, list.map(t => {
+        const on = !!cur && t.id === cur.id;
+        return h('li', null, h('button', { type: 'button', class: 'trace' + (on ? ' active' : ''), 'aria-current': on ? 'true' : null, 'data-k': 't-' + t.id, onclick: () => pick(t.id) },
+          h('span', { class: 'trace-meta' }, t.classe ? h('span', { class: 'tag' }, t.classe) : null, h('span', null, fmtDate(t.date))),
+          h('span', { class: 'trace-title' }, t.titre || 'Sans titre')));
+      })));
+    }
+    return h('section', { class: 'list-panel', 'aria-label': 'Liste des traces' }, kids);
+  }
+  function seg(legend, options, cur, onPick) {
+    return h('fieldset', { class: 'ctl' }, h('legend', null, legend),
+      h('div', { class: 'seg' }, options.map(o =>
+        h('button', { type: 'button', 'aria-pressed': String(o.value === cur), 'data-k': o.key, style: o.style || null, onclick: () => onPick(o.value) }, o.label))));
+  }
+  function renderControls() {
+    const p = S.prefs;
+    return h('div', { class: 'controls' },
+      seg('Taille', SIZES.map(v => ({ value: v, label: String(v), key: 'sz' + v })), p.size, v => setPref('size', v)),
+      seg('Interligne', SPACINGS.map(v => ({ value: v, label: String(v).replace('.', ','), key: 'lh' + v })), p.lh, v => setPref('lh', v)),
+      seg('Police', Object.keys(FONTS).map(k => ({ value: k, label: FONTS[k].label, key: 'ff' + k, style: 'font-family:' + FONTS[k].css })), p.font, v => setPref('font', v)),
+      h('fieldset', { class: 'ctl' }, h('legend', null, 'Exemplaires à découper'),
+        h('div', { class: 'seg stepper' },
+          h('button', { type: 'button', 'aria-label': 'Un exemplaire de moins', 'data-k': 'cp-', disabled: p.copies <= 1, onclick: () => setPref('copies', p.copies - 1) }, '-'),
+          h('output', { 'aria-live': 'polite' }, String(p.copies)),
+          h('button', { type: 'button', 'aria-label': 'Un exemplaire de plus', 'data-k': 'cp+', disabled: p.copies >= MAX_COPIES, onclick: () => setPref('copies', p.copies + 1) }, '+'))));
+  }
+  function renderSheet(t) {
+    if (!t) return h('section', { class: 'sheet-panel' });
+    const sheet = h('article', { class: 'sheet', style: T.sheetVars(S.prefs), 'aria-label': 'Aperçu de la fiche imprimée' });
+    sheet.append(T.copiesNodes(t.html, S.prefs.copies));
+    return h('section', { class: 'sheet-panel', 'aria-label': 'Fiche à imprimer' },
+      h('button', { class: 'btn ghost back', type: 'button', 'data-k': 'back', onclick: () => { S.view = 'list'; render(); window.scrollTo(0, 0); } }, 'Toutes les traces'),
+      h('div', { class: 'sheet-head' },
+        h('h2', null, t.titre || 'Sans titre'),
+        h('p', { class: 'sub' }, [t.classe, fmtDate(t.date, true)].filter(Boolean).join(', '))),
+      renderControls(),
+      h('div', { class: 'actions' },
+        h('button', { class: 'btn primary big', type: 'button', 'data-k': 'print', onclick: doPrint }, icon(ICON_PRINT), 'Imprimer')),
+      h('div', { class: 'sheet-stage' }, sheet));
+  }
+  function renderPrintRoot(t) {
+    const root = document.getElementById('print-root');
+    if (!root) return;
+    root.replaceChildren();
+    if (!t) return;
+    root.setAttribute('style', T.sheetVars(S.prefs));
+    root.append(T.copiesNodes(t.html, S.prefs.copies));
+  }
+  function pick(id) {
+    S.sel = id; S.view = 'sheet';
+    render();
+    if (isNarrow()) window.scrollTo(0, 0);
+  }
+  function setPref(k, v) { S.prefs[k] = v; T.store.set(PREFS_KEY, S.prefs); render(); }
+  function doPrint() { renderPrintRoot(current()); try { window.print(); } catch (e) { /* impression indisponible */ } }
+
+  async function load(quiet) {
+    if (!quiet) { S.state = 'loading'; render(); }
+    try {
+      const res = await fetch('data.json?t=' + Date.now(), { cache: 'no-store' });
+      if (res.status === 404) S.data = { v: 1, traces: [] };
+      else if (!res.ok) throw new Error('HTTP ' + res.status);
+      else S.data = T.normalizeData(await res.json());
+      S.state = 'ok';
+      S.loadedAt = Date.now();
+    } catch (e) {
+      if (!quiet || !S.data.traces.length) S.state = 'error';
+    }
+    if (!S.data.traces.some(t => t.id === S.sel)) { const first = T.sortTraces(S.data.traces)[0]; S.sel = first ? first.id : null; }
+    render();
+  }
+  window.addEventListener('resize', T.debounce(T.fitSheets, 120));
+  window.addEventListener('beforeprint', () => renderPrintRoot(current()));
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && Date.now() - S.loadedAt > 60000) load(true);
+  });
+  load();
+})();
+</script>
+</body>
+</html>
